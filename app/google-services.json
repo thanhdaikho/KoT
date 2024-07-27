@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "231644700603",
+    "project_id": "furniture-eab5c",
+    "storage_bucket": "furniture-eab5c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:231644700603:android:1577f09518baaf54be2e9e",
+        "android_client_info": {
+          "package_name": "com.poly.assignment"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCS3Mr7O-36xMeZG3Jvt82_GROa4eqbRlw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
