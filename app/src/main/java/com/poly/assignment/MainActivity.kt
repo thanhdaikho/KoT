@@ -44,3 +44,22 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+@Composable
+fun SignOut() {
+    //    Column(
+//        modifier = Modifier.fillMaxSize(),
+//        horizontalAlignment = Alignment.CenterHorizontally,
+//        verticalArrangement = Arrangement.Center
+//    ) {
+//        Text(text = "Welcome to the Home Screen!")
+//        Spacer(modifier = Modifier.height(16.dp))
+//        Button(onClick = {
+//            FirebaseAuth.getInstance().signOut()
+//            navController.navigate("welcome") {
+//                popUpTo("home") { inclusive = true }
+//            }
+//        }) {
+//            Text("Sign Out")
+//        }
+//    }
+}

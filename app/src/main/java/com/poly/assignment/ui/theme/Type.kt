@@ -22,6 +22,7 @@ val welcomeFontFamily = FontFamily(
         fontProvider = provider
     )
 )
+
 val Manrope = GoogleFont("Manrope")
 val ManropeFont = FontFamily(
     Font(
@@ -44,6 +45,16 @@ val DomineFont = FontFamily(
         fontProvider = provider
     )
 )
+
+
+val Gelasio = GoogleFont("Gelasio")
+val GelasioFont = FontFamily(
+    Font(
+        googleFont = Gelasio,
+        fontProvider = provider
+    )
+)
+
 val Nunito = GoogleFont("Nunito Sans")
 val NunitoFont = FontFamily(
     Font(
