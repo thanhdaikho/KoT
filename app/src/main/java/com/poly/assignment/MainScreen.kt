@@ -1,6 +1,8 @@
 package com.poly.assignment
 
 import ProductScreen
+import androidx.activity.ComponentActivity
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -30,6 +32,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -40,11 +45,10 @@ import java.lang.reflect.Modifier
 @Composable
 fun MainScreen(currentUser: FirebaseUser?) {
     val navController = rememberNavController()
-
+    val productViewModel: ProductViewModel = viewModel()
     // Get the current route from the navController
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
-
     val bottomNavItems = listOf(
         BottomNavItem(
             name = "Home",
@@ -74,26 +78,29 @@ fun MainScreen(currentUser: FirebaseUser?) {
 
     Scaffold(
         bottomBar = {
-            NavigationBar {
-                bottomNavItems.forEach { bottomNavItem ->
-                    NavigationBarItem(
-                        selected = bottomNavItem.route == currentRoute,
-                        onClick = {
-                            navController.navigate(bottomNavItem.route) {
-                                // Clear the back stack to avoid re-adding the same route
-                                launchSingleTop = true
-                                // Pop up to the start destination to clear the back stack
-                                popUpTo = navController.graph.startDestinationId
+            // Show TabRow except when on the ProductScreen
+            if (currentRoute != "product/{productId}") {
+                NavigationBar {
+                    bottomNavItems.forEach { bottomNavItem ->
+                        NavigationBarItem(
+                            selected = bottomNavItem.route == currentRoute,
+                            onClick = {
+                                navController.navigate(bottomNavItem.route) {
+                                    // Clear the back stack to avoid re-adding the same route
+                                    launchSingleTop = true
+                                    // Pop up to the start destination to clear the back stack
+                                    popUpTo = navController.graph.startDestinationId
+                                }
+                            },
+                            icon = {
+                                Icon(
+                                    imageVector = if (bottomNavItem.route == currentRoute)
+                                        bottomNavItem.selectedIcon else bottomNavItem.unselectedIcon,
+                                    contentDescription = bottomNavItem.name
+                                )
                             }
-                        },
-                        icon = {
-                            Icon(
-                                imageVector = if (bottomNavItem.route == currentRoute)
-                                    bottomNavItem.selectedIcon else bottomNavItem.unselectedIcon,
-                                contentDescription = bottomNavItem.name
-                            )
-                        }
-                    )
+                        )
+                    }
                 }
             }
         }
@@ -130,7 +137,7 @@ fun MainScreen(currentUser: FirebaseUser?) {
             composable("login") { LoginScreen(navController) }
             composable("signup") { SignupScreen(navController) }
             composable("home") { HomeScreen(navController) }
-            composable("saved") { SavedScreen(navController) }
+            composable("saved") { SavedScreen(navController, productViewModel) }
             composable("noti") { NotificationsScreen(navController) }
             composable("profile") { ProfileScreen(navController) }
             composable("product/{productId}") { backStackEntry ->
@@ -141,7 +148,10 @@ fun MainScreen(currentUser: FirebaseUser?) {
                 }
                 product.value?.let {
                     ProductScreen(product = it)
-                } ?: run {
+                }
+                product.value?.let {
+                    ProductScreen(product = it, viewModel = productViewModel) // Pass viewModel here
+                }?: run {
                     // Handle loading or error state
                     Text("Loading...")
                 }
