@@ -79,7 +79,7 @@ fun MainScreen(currentUser: FirebaseUser?) {
     Scaffold(
         bottomBar = {
             // Show TabRow except when on the ProductScreen
-            if (currentRoute != "product/{productId}") {
+            if (currentRoute != "product/{productId}" && currentRoute != "cart") {
                 NavigationBar {
                     bottomNavItems.forEach { bottomNavItem ->
                         NavigationBarItem(
@@ -140,6 +140,8 @@ fun MainScreen(currentUser: FirebaseUser?) {
             composable("saved") { SavedScreen(navController, productViewModel) }
             composable("noti") { NotificationsScreen(navController) }
             composable("profile") { ProfileScreen(navController) }
+            composable("cart") { CartScreen(navController, productViewModel) }
+            composable("checkout") { CheckoutScreen(navController, productViewModel) }
             composable("product/{productId}") { backStackEntry ->
                 val productId = backStackEntry.arguments?.getString("productId")?.toInt() ?: 0
                 val product = remember { mutableStateOf<Product?>(null) }
@@ -151,7 +153,7 @@ fun MainScreen(currentUser: FirebaseUser?) {
                 }
                 product.value?.let {
                     ProductScreen(product = it, viewModel = productViewModel) // Pass viewModel here
-                }?: run {
+                } ?: run {
                     // Handle loading or error state
                     Text("Loading...")
                 }

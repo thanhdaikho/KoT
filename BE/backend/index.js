@@ -37,6 +37,35 @@ app.post("/upload", upload.array('images', 10), (req, res) => {
     });
 });
 
+const BillDetail = mongoose.model("BillDetail", {
+    id: {
+        type: Number,
+        required: true
+    },
+    userID: {
+        type: String,
+        required: true
+    },
+    items: [{
+        product_id: {
+            type: Number,
+            required: true
+        },
+        quantity: {
+            type: Number,
+            required: true
+        },
+        totalPrice: {
+            type: Number,
+            required: true
+        }
+    }],
+    totalAmount: {
+        type: Number,
+        required: true
+    }
+});
+
 const Product = mongoose.model("Product", {
     id: {
         type: Number,
@@ -80,6 +109,56 @@ app.get('/allproducts', async (req, res) => {
     let products = await Product.find({})
     res.send(products)
 })
+
+app.post('/addtocart', async (req, res) => {
+    const { billId, userID, productId, quantity } = req.body;
+
+    try {
+        // Tìm sản phẩm theo productId
+        const product = await Product.findOne({ id: productId });
+
+        if (!product) {
+            return res.status(404).json({ message: 'Product not found' });
+        }
+
+        let bill = await BillDetail.findOne({ id: billId });
+
+        if (!bill) {
+            // Nếu hóa đơn chưa tồn tại, tạo mới
+            bill = new BillDetail({
+                id: billId,
+                items: [],
+                totalAmount: 0
+            });
+        }
+
+        // Tìm sản phẩm trong giỏ hàng
+        const existingItemIndex = bill.items.findIndex(item => item.product_id === product.id);
+
+        if (existingItemIndex !== -1) {
+            // Nếu sản phẩm đã có trong giỏ hàng, cập nhật số lượng và tổng tiền
+            bill.items[existingItemIndex].quantity += quantity;
+            bill.items[existingItemIndex].totalPrice += product.new_price * quantity;
+        } else {
+            // Nếu sản phẩm chưa có, thêm sản phẩm vào giỏ hàng
+            bill.items.push({
+                product_id: product.id, // Sử dụng id của sản phẩm làm product_id
+                quantity,
+                totalPrice: product.new_price * quantity
+            });
+        }
+
+        // Cập nhật tổng tiền hóa đơn
+        bill.totalAmount = bill.items.reduce((acc, item) => acc + item.totalPrice, 0);
+
+        // Lưu lại hóa đơn
+        await bill.save();
+
+        res.json({ success: true, bill });
+    } catch (error) {
+        res.status(500).json({ message: 'Error adding to cart', error });
+    }
+});
 
 app.post('/addproduct', async (req, res) => {
     let products = await Product.find({});

@@ -158,7 +158,7 @@ fun HomeScreen(navController: NavController) {
                     .size(27.dp)
                     .align(Alignment.CenterVertically)
                     .alpha(0.6f)
-                    .clickable {})
+                    .clickable { navController.navigate("cart")})
         }
 
         Column(modifier = Modifier

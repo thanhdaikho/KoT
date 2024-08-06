@@ -1,11 +1,9 @@
 import android.util.Log
-import android.widget.Space
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement.Center
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -15,6 +13,7 @@ import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.BookmarkBorder
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -35,7 +34,7 @@ import com.poly.assignment.ui.theme.NunitoFont
 @Composable
 fun ProductScreen(product: Product, viewModel: ProductViewModel = viewModel()) {
     var selectedColorIndex by remember { mutableStateOf(0) }
-    var quantityCount by remember { mutableStateOf(1) }
+    var quantityCountState by remember { mutableStateOf(1) }
     val colors = listOf(Color.White, Color(0xFFB4916C), Color(0xFFE4CBAD))
     val savedProducts by viewModel.savedProducts.collectAsState()
     val isSaved = savedProducts.contains(product)
@@ -47,7 +46,6 @@ fun ProductScreen(product: Product, viewModel: ProductViewModel = viewModel()) {
     ) {
         // Display Image
         if (product.images.isNotEmpty()) {
-            // Ensure the selectedColorIndex is within bounds
             val imageUrl = product.images.getOrElse(selectedColorIndex) { product.images.first() }
             val processedImageUrl =
                 imageUrl.replace("http://localhost:4000", "http://192.168.1.5:4000")
@@ -164,7 +162,8 @@ fun ProductScreen(product: Product, viewModel: ProductViewModel = viewModel()) {
                                 .clip(RoundedCornerShape(8.dp))
                                 .background(Color(0xFFE0E0E0))
                                 .clickable {
-                                    quantityCount = maxOf(1, quantityCount - 1)
+                                    quantityCountState = maxOf(1, quantityCountState - 1)
+                                    Log.d("ProductScreen", "Quantity: $quantityCountState")
                                 } // Prevent quantity from going below 1
                                 .padding(4.dp)
                         ) {
@@ -177,7 +176,7 @@ fun ProductScreen(product: Product, viewModel: ProductViewModel = viewModel()) {
                         }
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
-                            text = quantityCount.toString(),
+                            text = quantityCountState.toString(),
                             fontSize = 20.sp,
                             fontWeight = FontWeight.Bold,
                             modifier = Modifier.padding(horizontal = 8.dp)
@@ -188,7 +187,8 @@ fun ProductScreen(product: Product, viewModel: ProductViewModel = viewModel()) {
                                 .size(30.dp)
                                 .clip(RoundedCornerShape(8.dp))
                                 .background(Color(0xFFE0E0E0))
-                                .clickable { quantityCount += 1 }
+                                .clickable { quantityCountState += 1
+                                    Log.d("ProductScreen", "Quantity: $quantityCountState") }
                                 .padding(4.dp)
                         ) {
                             Icon(
@@ -251,7 +251,9 @@ fun ProductScreen(product: Product, viewModel: ProductViewModel = viewModel()) {
                         .size(60.dp)
                         .clip(shape = RoundedCornerShape(14.dp))
                         .background(color = Color(0xFFF0F0F0))
-                        .clickable { viewModel.toggleSaveProduct(product) }
+                        .clickable {
+                            viewModel.toggleSaveProduct(product)
+                        }
                     ) {
                         Icon(
                             imageVector = Icons.Outlined.BookmarkBorder, contentDescription = "",
@@ -266,8 +268,11 @@ fun ProductScreen(product: Product, viewModel: ProductViewModel = viewModel()) {
                         .height(60.dp)
                         .clip(shape = RoundedCornerShape(14.dp))
                         .background(color = Color.Black)
-                        .clickable { }
-                    ) {
+                        .clickable {
+                            val productItem =
+                                ProductItem(product = product, quantity = quantityCountState)
+                            viewModel.toggleCartProduct(productItem)
+                        }) {
                         Text(
                             text = "Add to cart",
                             fontFamily = NunitoFont,
@@ -284,3 +289,8 @@ fun ProductScreen(product: Product, viewModel: ProductViewModel = viewModel()) {
 
     }
 }
+
+data class ProductItem(
+    val product: Product,
+    var quantity: Int = 1
+)
