@@ -70,177 +70,205 @@ class MainActivity : ComponentActivity() {
                             auth.removeAuthStateListener(authStateListener)
                         }
                     }
-//                    MainScreen(userState.value)
-                    EmtyScreen()
+                    MainScreen(userState.value)
+
                 }
             }
         }
     }
 }
-@Composable
-fun SignOut() {
-    //    Column(
-//        modifier = Modifier.fillMaxSize(),
-//        horizontalAlignment = Alignment.CenterHorizontally,
-//        verticalArrangement = Arrangement.Center
-//    ) {
-//        Text(text = "Welcome to the Home Screen!")
-//        Spacer(modifier = Modifier.height(16.dp))
-//        Button(onClick = {
-//            FirebaseAuth.getInstance().signOut()
-//            navController.navigate("welcome") {
-//                popUpTo("home") { inclusive = true }
+
+//@Composable
+//fun EmtyScreen() {
+//    Column(modifier = Modifier
+//        .fillMaxSize()
+//        .padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 1.dp)) {
+//        Row(verticalAlignment = Alignment.CenterVertically) {
+//            Icon(
+//                imageVector = Icons.Outlined.ArrowBackIosNew,
+//                contentDescription = null,
+//                modifier = Modifier
+//                    .size(27.dp)
+//                    .alpha(0.6f)
+//                    .clickable {}
+//            )
+//            Spacer(modifier = Modifier.weight(1f))
+//            Column(
+//                modifier = Modifier.weight(8f),
+//                horizontalAlignment = Alignment.CenterHorizontally
+//            ) {
+//                Text(
+//                    text = "Check out",
+//                    color = Color.Black,
+//                    fontWeight = FontWeight.W600,
+//                    fontSize = 22.sp,
+//                    letterSpacing = 1.sp,
+//                    fontFamily = GelasioFont,
+//                    textAlign = TextAlign.Center,
+//                    modifier = Modifier.padding(top = 3.dp)
+//                )
 //            }
-//        }) {
-//            Text("Sign Out")
+//            Spacer(modifier = Modifier.weight(1f))
+//        }
+//        Row(modifier = Modifier
+//            .padding(top = 22.dp)
+//        ) {
+//            Text(text = "Shipping Address", color = Color(0xFF909090), fontSize = 22.sp, fontWeight = FontWeight.SemiBold)
+//            Spacer(modifier = Modifier.width(170.dp))
+//            Image(painter = painterResource(id = R.drawable.edit_icon),
+//                contentDescription = "",
+//                modifier = Modifier
+//                    .size(24.dp))
+//        }
+//        Column(modifier = Modifier
+//            .fillMaxWidth()
+//            .padding(top = 20.dp)
+//            .height(135.dp)
+//            .clip(shape = RoundedCornerShape(16.dp))
+//            .background(color = Color(0XFFFFFFFF))
+//            .padding(top = 18.dp)
+//            .padding(horizontal = 16.dp),
+//            ) {
+//            Text(text = "Bruno Fernandes", fontSize = 23.sp, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center)
+//            Spacer(modifier = Modifier.height(15.dp))
+//            Box(modifier = Modifier
+//                .fillMaxWidth()
+//                .height(1.dp)
+//                .background(color = Color(0xFFF0F0F0))
+//            )
+//            Spacer(modifier = Modifier.height(8.dp))
+//
+//            Text(text = "25 rue Robert Latouche, Nice, 06200, Côte", color = Color(0xFF808080))
+//            Text(text = "D'azur, France", color = Color(0xFF808080), modifier = Modifier.padding(bottom = 1.dp))
+//
+//        }
+//        Row(modifier = Modifier
+//            .padding(top = 22.dp)
+//        ) {
+//            Text(text = "Payment", color = Color(0xFF909090), fontSize = 22.sp, fontWeight = FontWeight.SemiBold)
+//            Spacer(modifier = Modifier.width(260.dp))
+//            Image(painter = painterResource(id = R.drawable.edit_icon),
+//                contentDescription = "",
+//                modifier = Modifier
+//                    .size(24.dp))
+//        }
+//        Column(modifier = Modifier
+//            .fillMaxWidth()
+//            .padding(top = 20.dp)
+//            .height(75.dp)
+//            .clip(shape = RoundedCornerShape(16.dp))
+//            .background(color = Color(0XFFFFFFFF))
+//            .padding(horizontal = 16.dp),
+//            verticalArrangement = Arrangement.Center
+//        ) {
+//            Row(
+//                verticalAlignment = Alignment.CenterVertically, // Căn giữa theo chiều dọc trong Row
+//                 // Thêm khoảng đệm nếu cần
+//            ) {
+//                Image(
+//                    painter = painterResource(id = R.drawable.card),
+//                    contentDescription = "",
+//                    contentScale = ContentScale.FillWidth,
+//                    modifier = Modifier
+//                        .width(100.dp)
+//                        .height(40.dp)
+//                )
+//                Spacer(modifier = Modifier.width(16.dp))
+//                Text(
+//                    text = "**** **** **** 3947",
+//                    fontSize = 20.sp,
+//                    fontWeight = FontWeight.Bold,
+//                    modifier = Modifier.padding(top = 5.dp)
+//                )
+//            }
+//
+//        }
+//        Row(modifier = Modifier
+//            .padding(top = 22.dp)
+//        ) {
+//            Text(text = "Delivery method", color = Color(0xFF909090), fontSize = 22.sp, fontWeight = FontWeight.SemiBold)
+//            Spacer(modifier = Modifier.width(260.dp))
+//            Image(painter = painterResource(id = R.drawable.edit_icon),
+//                contentDescription = "",
+//                modifier = Modifier
+//                    .size(24.dp))
+//        }
+//        Column(modifier = Modifier
+//            .fillMaxWidth()
+//            .padding(top = 20.dp)
+//            .height(75.dp)
+//            .clip(shape = RoundedCornerShape(16.dp))
+//            .background(color = Color(0XFFFFFFFF))
+//            .padding(horizontal = 16.dp),
+//            verticalArrangement = Arrangement.Center
+//        ) {
+//            Row(
+//                verticalAlignment = Alignment.CenterVertically, // Căn giữa theo chiều dọc trong Row
+//                // Thêm khoảng đệm nếu cần
+//            ) {
+//                Image(
+//                    painter = painterResource(id = R.drawable.deli),
+//                    contentDescription = "",
+//                    contentScale = ContentScale.FillWidth,
+//                    modifier = Modifier
+//                        .width(115.dp)
+//                        .height(50.dp)
+//                )
+//                Spacer(modifier = Modifier.width(16.dp))
+//                Text(
+//                    text = "Fast (2-3 days)",
+//                    fontSize = 18.sp,
+//                    fontWeight = FontWeight.Bold,
+//                    modifier = Modifier.padding(top = 5.dp)
+//                )
+//            }
+//        }
+//        Column(
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .padding(top = 24.dp)
+//                .height(150.dp)
+//                .clip(shape = RoundedCornerShape(16.dp))
+//                .background(color = Color(0XFFFFFFFF))
+//                .padding(horizontal = 16.dp),
+//            verticalArrangement = Arrangement.Center
+//        ) {
+//            Row(
+//                modifier = Modifier.fillMaxWidth(),
+//                horizontalArrangement = Arrangement.SpaceBetween
+//            ) {
+//                Text(text = "Order:", color = Color(0xFF808080), fontSize = 24.sp)
+//                Text(text = "$ 200.15", fontSize = 21.sp, fontWeight = FontWeight.SemiBold)
+//            }
+//            Spacer(modifier = Modifier.height(10.dp))
+//            Row(
+//                modifier = Modifier.fillMaxWidth(),
+//                horizontalArrangement = Arrangement.SpaceBetween
+//            ) {
+//                Text(text = "Delivery:", color = Color(0xFF808080), fontSize = 24.sp)
+//                Text(text = "$ 5", fontSize = 21.sp, fontWeight = FontWeight.SemiBold)
+//            }
+//            Spacer(modifier = Modifier.height(10.dp))
+//            Row(
+//                modifier = Modifier.fillMaxWidth(),
+//                horizontalArrangement = Arrangement.SpaceBetween
+//            ) {
+//                Text(text = "Total:", color = Color(0xFF808080), fontSize = 24.sp)
+//                Text(text = "$ 205.15", fontSize = 21.sp, fontWeight = FontWeight.SemiBold)
+//            }
+//        }
+//        Spacer(modifier = Modifier.height(26.dp))
+//        Box(modifier = Modifier
+//            .fillMaxWidth()
+//            .height(60.dp)
+//            .clip(shape = RoundedCornerShape(10.dp))
+//            .background(color = Color(0xFF242424))
+//            .clickable { },
+//            contentAlignment = Alignment.Center
+//        ) {
+//            Text(text = "SUBMIT ORDER", color = Color.White, fontSize = 24.sp, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center)
 //        }
 //    }
-}
-@Composable
-fun EmtyScreen() {
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 12.dp)) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Icon(
-                imageVector = Icons.Outlined.ArrowBackIosNew,
-                contentDescription = null,
-                modifier = Modifier
-                    .size(27.dp)
-                    .alpha(0.6f)
-                    .clickable {}
-            )
-            Spacer(modifier = Modifier.weight(1f))
-            Column(
-                modifier = Modifier.weight(8f),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(
-                    text = "Check out",
-                    color = Color.Black,
-                    fontWeight = FontWeight.W600,
-                    fontSize = 22.sp,
-                    letterSpacing = 1.sp,
-                    fontFamily = GelasioFont,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(top = 3.dp)
-                )
-            }
-            Spacer(modifier = Modifier.weight(1f))
-        }
-        Row(modifier = Modifier
-            .padding(top = 32.dp)
-        ) {
-            Text(text = "Shipping Address", color = Color(0xFF909090), fontSize = 22.sp, fontWeight = FontWeight.SemiBold)
-            Spacer(modifier = Modifier.width(170.dp))
-            Image(painter = painterResource(id = R.drawable.edit_icon),
-                contentDescription = "",
-                modifier = Modifier
-                    .size(24.dp))
-        }
-        Column(modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 24.dp)
-            .height(135.dp)
-            .clip(shape = RoundedCornerShape(16.dp))
-            .background(color = Color(0XFFFFFFFF))
-            .padding(top = 18.dp)
-            .padding(horizontal = 16.dp),
-            ) {
-            Text(text = "Bruno Fernandes", fontSize = 23.sp, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center)
-            Spacer(modifier = Modifier.height(15.dp))
-            Box(modifier = Modifier
-                .fillMaxWidth()
-                .height(1.dp)
-                .background(color = Color(0xFFF0F0F0))
-            )
-            Spacer(modifier = Modifier.height(8.dp))
+//}
 
-            Text(text = "25 rue Robert Latouche, Nice, 06200, Côte", color = Color(0xFF808080))
-            Text(text = "D'azur, France", color = Color(0xFF808080), modifier = Modifier.padding(bottom = 1.dp))
 
-        }
-        Row(modifier = Modifier
-            .padding(top = 32.dp)
-        ) {
-            Text(text = "Payment", color = Color(0xFF909090), fontSize = 22.sp, fontWeight = FontWeight.SemiBold)
-            Spacer(modifier = Modifier.width(260.dp))
-            Image(painter = painterResource(id = R.drawable.edit_icon),
-                contentDescription = "",
-                modifier = Modifier
-                    .size(24.dp))
-        }
-        Column(modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 24.dp)
-            .height(75.dp)
-            .clip(shape = RoundedCornerShape(16.dp))
-            .background(color = Color(0XFFFFFFFF))
-            .padding(horizontal = 16.dp),
-            verticalArrangement = Arrangement.Center
-        ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically, // Căn giữa theo chiều dọc trong Row
-                 // Thêm khoảng đệm nếu cần
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.card),
-                    contentDescription = "",
-                    contentScale = ContentScale.FillWidth,
-                    modifier = Modifier
-                        .width(100.dp)
-                        .height(40.dp)
-                )
-                Spacer(modifier = Modifier.width(16.dp))
-                Text(
-                    text = "**** **** **** 3947",
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(top = 5.dp)
-                )
-            }
-
-        }
-        Row(modifier = Modifier
-            .padding(top = 32.dp)
-        ) {
-            Text(text = "Payment", color = Color(0xFF909090), fontSize = 22.sp, fontWeight = FontWeight.SemiBold)
-            Spacer(modifier = Modifier.width(260.dp))
-            Image(painter = painterResource(id = R.drawable.edit_icon),
-                contentDescription = "",
-                modifier = Modifier
-                    .size(24.dp))
-        }
-        Column(modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 24.dp)
-            .height(75.dp)
-            .clip(shape = RoundedCornerShape(16.dp))
-            .background(color = Color(0XFFFFFFFF))
-            .padding(horizontal = 16.dp),
-            verticalArrangement = Arrangement.Center
-        ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically, // Căn giữa theo chiều dọc trong Row
-                // Thêm khoảng đệm nếu cần
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.card),
-                    contentDescription = "",
-                    contentScale = ContentScale.FillWidth,
-                    modifier = Modifier
-                        .width(100.dp)
-                        .height(40.dp)
-                )
-                Spacer(modifier = Modifier.width(16.dp))
-                Text(
-                    text = "**** **** **** 3947",
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(top = 5.dp)
-                )
-            }
-
-        }
-    }
-}

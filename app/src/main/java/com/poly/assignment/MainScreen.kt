@@ -78,8 +78,7 @@ fun MainScreen(currentUser: FirebaseUser?) {
 
     Scaffold(
         bottomBar = {
-            // Show TabRow except when on the ProductScreen
-            if (currentRoute != "product/{productId}" && currentRoute != "cart") {
+            if (currentRoute != "product/{productId}" && currentRoute != "cart" && currentRoute != "response" && currentRoute != "checkout") {
                 NavigationBar {
                     bottomNavItems.forEach { bottomNavItem ->
                         NavigationBarItem(
@@ -140,6 +139,7 @@ fun MainScreen(currentUser: FirebaseUser?) {
             composable("saved") { SavedScreen(navController, productViewModel) }
             composable("noti") { NotificationsScreen(navController) }
             composable("profile") { ProfileScreen(navController) }
+            composable("response") { ResponseScreen(navController) }
             composable("cart") { CartScreen(navController, productViewModel) }
             composable("checkout") { CheckoutScreen(navController, productViewModel) }
             composable("product/{productId}") { backStackEntry ->

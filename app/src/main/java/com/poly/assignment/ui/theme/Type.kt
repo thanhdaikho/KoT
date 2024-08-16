@@ -30,6 +30,13 @@ val ManropeFont = FontFamily(
         fontProvider = provider
     )
 )
+val Merriweather = GoogleFont("Merriweather")
+val MerriweatherFont = FontFamily(
+    Font(
+        googleFont = Merriweather,
+        fontProvider = provider
+    )
+)
 val Lora = GoogleFont("Lora")
 val LoraFont = FontFamily(
     Font(
